@@ -4,9 +4,11 @@
  */
 class TempString {
   public:
-    char * string;
     TempString(char * a,char * b);
     TempString(char * a,char * b, char * c);
+    TempString(char * a,char * b, char * c,char * d);
+    TempString(char * a,char * b, char * c,char * d,char * e);
+    char * s(){return string;};
     /*
      * purge()
      * Finish with string while still in scope.
@@ -14,4 +16,6 @@ class TempString {
      */
     void purge();
     ~TempString();
+    private:
+    char * string;
 };

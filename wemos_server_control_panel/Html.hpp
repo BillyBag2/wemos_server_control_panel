@@ -13,3 +13,10 @@ public:
   Html(ESP8266WebServer * server);
   void send(char * html) ;
 };
+
+
+class HtmlPage: TempString {
+  public:
+  HtmlPage(char* a, char * b):TempString("<html>\n<headers>",a,"\n</headers>\n<body>\n",b,"\n</body>\n</html>"){};
+  char * page() {return s();};
+};

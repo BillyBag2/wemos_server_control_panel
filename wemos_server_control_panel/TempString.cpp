@@ -18,6 +18,25 @@ TempString::TempString(char * a, char * b,char * c) {
   strcat(string,c);
 }
 
+TempString::TempString(char * a, char * b,char * c, char * d) {
+  purge();
+  string = (char *)malloc(strlen(a) + strlen(b) + strlen(c) + strlen(d) + 1);
+  strcpy(string,a);
+  strcat(string,b);
+  strcat(string,c);
+  strcat(string,d);
+}
+
+TempString::TempString(char * a, char * b,char * c, char * d, char * e) {
+  purge();
+  string = (char *)malloc(strlen(a) + strlen(b) + strlen(c) + strlen(d) + strlen(e) + 1);
+  strcpy(string,a);
+  strcat(string,b);
+  strcat(string,c);
+  strcat(string,d);
+  strcat(string,e);
+}
+
 void TempString::purge() {
   if(NULL != string) {
     free(string);
