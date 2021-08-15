@@ -29,3 +29,5 @@ I am starting by targeting a wemos D1 (esp-8266) using Mac arduno IDE. That is w
 
 A random list of links that may or maynot be useful.
 
+ * https://www.wemos.cc/en/latest/d1/d1_mini.html
+
