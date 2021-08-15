@@ -1,4 +1,4 @@
-# wemos_server_cotrol_panel
+# wemos_server_control_panel
 
 ## Overview (WIP)
 
