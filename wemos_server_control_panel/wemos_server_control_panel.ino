@@ -19,12 +19,15 @@ Html html(&server);
 const int led = 13;
 
 void handleRoot() {
-  digitalWrite(led, 1);
-  //server.send(200, "text/plain", "hello from esp8266!\r\n");
-  //html.send("<html><body>Hello</body></html>");
-  //html.send(TempString("","<html><body>Hello</body></html>").s());
-  HtmlPage page = HtmlPage("","Hello");
-  html.send(page.page());
+  digitalWrite(led, 1);  
+  HtmlPage page = HtmlPage(
+    HtmlTitle("Server Control Panel").s(),
+    TempString(
+      HtmlHeader("Server Control Panel","1").s(),
+      "Some text"
+    ).s()
+  );
+  html.send(page.s());
   digitalWrite(led, 0);
 }
 

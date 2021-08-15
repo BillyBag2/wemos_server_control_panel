@@ -15,8 +15,17 @@ public:
 };
 
 
-class HtmlPage: TempString {
+class HtmlPage: public TempString {
   public:
   HtmlPage(char* a, char * b):TempString("<html>\n<headers>",a,"\n</headers>\n<body>\n",b,"\n</body>\n</html>"){};
-  char * page() {return s();};
+};
+
+class HtmlTitle: public TempString {
+  public:
+  HtmlTitle(char* a):TempString("<title>\n",a,"\n</title>\n"){};
+};
+
+class HtmlHeader: public TempString {
+  public:
+  HtmlHeader(char* a,char * n):TempString("<h",n,">",a,"</h",n,">\n"){};
 };

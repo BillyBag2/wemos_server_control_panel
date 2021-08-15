@@ -4,14 +4,12 @@
 #include "TempString.hpp"
 
 TempString::TempString(char * a, char * b) {
-  purge();
   string = (char *)malloc(strlen(a) + strlen(b) + 1);
   strcpy(string,a);
   strcat(string,b);
 }
 
 TempString::TempString(char * a, char * b,char * c) {
-  purge();
   string = (char *)malloc(strlen(a) + strlen(b) + strlen(c) + 1);
   strcpy(string,a);
   strcat(string,b);
@@ -19,7 +17,6 @@ TempString::TempString(char * a, char * b,char * c) {
 }
 
 TempString::TempString(char * a, char * b,char * c, char * d) {
-  purge();
   string = (char *)malloc(strlen(a) + strlen(b) + strlen(c) + strlen(d) + 1);
   strcpy(string,a);
   strcat(string,b);
@@ -28,7 +25,6 @@ TempString::TempString(char * a, char * b,char * c, char * d) {
 }
 
 TempString::TempString(char * a, char * b,char * c, char * d, char * e) {
-  purge();
   string = (char *)malloc(strlen(a) + strlen(b) + strlen(c) + strlen(d) + strlen(e) + 1);
   strcpy(string,a);
   strcat(string,b);
@@ -36,6 +32,28 @@ TempString::TempString(char * a, char * b,char * c, char * d, char * e) {
   strcat(string,d);
   strcat(string,e);
 }
+
+TempString::TempString(char * a, char * b,char * c, char * d, char * e, char * f) {
+  string = (char *)malloc(strlen(a) + strlen(b) + strlen(c) + strlen(d) + strlen(e) + strlen(f) + 1);
+  strcpy(string,a);
+  strcat(string,b);
+  strcat(string,c);
+  strcat(string,d);
+  strcat(string,e);
+  strcat(string,f);
+}
+
+TempString::TempString(char * a, char * b,char * c, char * d, char * e, char * f, char * g) {
+  string = (char *)malloc(strlen(a) + strlen(b) + strlen(c) + strlen(d) + strlen(e) + strlen(f) + strlen(g) + 1);
+  strcpy(string,a);
+  strcat(string,b);
+  strcat(string,c);
+  strcat(string,d);
+  strcat(string,e);
+  strcat(string,f);
+  strcat(string,g);
+}
+
 
 void TempString::purge() {
   if(NULL != string) {
