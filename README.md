@@ -19,12 +19,9 @@ Wishlist includes...
 
 ## About
 
-I am starting by targeting a wemos D1 using arduno IDE. That is what I have. Happy to add portability changes to master if requested.
+I am starting by targeting a wemos D1 (esp-8266) using Mac arduno IDE. That is what I have. Happy to add portability changes to master if requested.
 
 # References
 
 A random list of links that may or maynot be useful.
 
-
-
- 
