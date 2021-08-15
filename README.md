@@ -17,6 +17,10 @@ Wishlist includes...
  * ssh commands, eg shutdown. 
  * File based config. (static to start with)
 
+## Coding
+
+I intend to create private.h and private.c that will contain private data. If stuff is not compiling then you may need to add items to your version of thsese files.
+
 ## About
 
 I am starting by targeting a wemos D1 (esp-8266) using Mac arduno IDE. That is what I have. Happy to add portability changes to master if requested.
