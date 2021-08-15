@@ -13,4 +13,5 @@ class TempString {
      * Cannot be used after this.
      */
     void purge();
+    ~TempString();
 };
