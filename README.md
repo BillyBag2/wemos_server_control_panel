@@ -40,4 +40,5 @@ A random list of links that may or maynot be useful.
 
  * https://www.wemos.cc/en/latest/d1/d1_mini.html
  * https://github.com/esp8266/Arduino
+ * https://en.wikipedia.org/wiki/Wake-on-LAN
 
