@@ -51,6 +51,10 @@ void handleWol() {
   digitalWrite(LED_PIN, LED_OFF);
 }
 
+/*
+ * handleWolCgi()
+ * Handle a WOL request.
+ */
 void handleWolCgi() {
   digitalWrite(LED_PIN, LED_ON);
   String param = "";
@@ -75,13 +79,20 @@ void handleWolCgi() {
   {
     HtmlPage page = HtmlPage(
       HtmlTitle("Error:Wake On LAN"),
-      HtmlHeader("Error:Wake On LAN","1") + HtmlLink("Wake On LAN","/wol.html")
+        HtmlHeader("Error:Wake On LAN","1") + 
+        HtmlBr() +
+        HtmlLink("Wake On LAN","/wol.html")
     );
     html.send(page);
   }
   
   digitalWrite(LED_PIN, LED_OFF);
 }
+
+/*
+ * handleNotFound()
+ * Handle not found page.
+ */
 void handleNotFound() {
   digitalWrite(LED_PIN, LED_ON);
   String message = "File Not Found\n\n";
