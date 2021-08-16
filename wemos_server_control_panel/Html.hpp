@@ -20,7 +20,7 @@ class HtmlPage: public String {
     String("<html>\n<headers>\n"
     "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n") +
     headers + 
-    "\n</headers>\n<body style=\"font-family: monospace;\">\n" +
+    "\n</headers>\n<body style=\"font-family: monospace;font-size: 200%;\">\n" +
     body +
     "\n</body>\n</html>\n"){};
 };
