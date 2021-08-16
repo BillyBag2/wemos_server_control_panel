@@ -42,7 +42,10 @@ void handleWol() {
     digitalWrite(LED_PIN, LED_ON);  
   HtmlPage page = HtmlPage(
     HtmlTitle("Wake On LAN"),
-    HtmlHeader("Wake On LAN","1") + HtmlLink("Test wake on LAN","/wol.cgi?MAC=01:02:03:04:05:06:07:08")
+      HtmlHeader("Wake On LAN","1") +
+      HtmlLink("Test wake on LAN","/wol.cgi?MAC=01:02:03:04:05:06:07:08") +
+      HtmlBr() +
+      HtmlLink("Home","/")
   );
   html.send(page);
   digitalWrite(LED_PIN, LED_OFF);
@@ -63,6 +66,7 @@ void handleWolCgi() {
       HtmlHeader("Wake On LAN sent!","1") +
       "A Wake On Lan massage was sent to " +
       param + 
+      HtmlBr() +
       HtmlLink("Wake On LAN","/wol.html")
     );
     html.send(page);

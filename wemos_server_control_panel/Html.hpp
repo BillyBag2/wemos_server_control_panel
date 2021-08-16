@@ -40,3 +40,9 @@ class HtmlLink: public String {
   public:
   HtmlLink(String link,String url):String("\n<a href=\"" + url + "\">" + link + "</a>"){};
 };
+
+class HtmlBr: public String {
+  public:
+  HtmlBr():String("<br>"){ };
+
+};
