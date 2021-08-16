@@ -5,6 +5,9 @@
 #include "private.h"
 #include "Html.hpp"
 #include "wol.hpp"
+#include "Server.hpp"
+
+extern SCP_Server private_servers[];
 
 #ifndef PRIVATE_STASSID
 #define PRIVATE_STASSID "your-ssid"
@@ -40,11 +43,19 @@ void handleRoot() {
  * Wake On LAN 'static' page.
  */
 void handleWol() {
-    digitalWrite(LED_PIN, LED_ON);  
+  digitalWrite(LED_PIN, LED_ON);
+  // Create a list of servers.
+  int i = 0;
+  String list("");
+  while(private_servers[i].name) {
+    list = list + HtmlLink(private_servers[i].name,String("/wol.cgi?MAC=") + private_servers[i].mac);
+    list += HtmlBr();
+    i++;
+  }
   HtmlPage page = HtmlPage(
     HtmlTitle("Wake On LAN"),
-      HtmlHeader("Wake On LAN","1") +
-      HtmlLink("Test wake on LAN","/wol.cgi?MAC=01:02:03:04:05:06:07:08") +
+      HtmlHeader("Wake On LAN","1") + list +
+ //     HtmlLink("Test wake on LAN","/wol.cgi?MAC=01:02:03:04:05:06:07:08") +
       HtmlBr() +
       HtmlLink("Home","/")
   );
