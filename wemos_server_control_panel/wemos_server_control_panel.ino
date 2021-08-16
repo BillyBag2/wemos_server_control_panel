@@ -4,6 +4,7 @@
 #include <ESP8266mDNS.h>
 #include "private.h"
 #include "Html.hpp"
+#include "wol.hpp"
 
 #ifndef PRIVATE_STASSID
 #define PRIVATE_STASSID "your-ssid"
@@ -73,6 +74,7 @@ void handleWolCgi() {
       HtmlBr() +
       HtmlLink("Wake On LAN","/wol.html")
     );
+    wol(param.c_str());
     html.send(page);
   }
   else
@@ -138,6 +140,9 @@ void setup(void) {
   if (MDNS.begin("esp8266")) {
     Serial.println("MDNS responder started");
   }
+
+  // Setup wol
+  wolInit();
 
   server.on("/", handleRoot);
   server.on("/wol.html",handleWol);

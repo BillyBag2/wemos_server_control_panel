@@ -1,5 +1,4 @@
 #include <ESP8266WebServer.h>
-#include "TempString.hpp"
 
 /*
  * class Html
