@@ -10,16 +10,18 @@
 #define PRIVATE_STAPSK  "your-password"
 #endif
 
+#define LED_PIN LED_BUILTIN
+#define LED_OFF 1
+#define LED_ON 0
+
 const char* ssid = PRIVATE_STASSID;
 const char* password = PRIVATE_STAPSK;
 
 ESP8266WebServer server(80);
 Html html(&server);
 
-const int led = 13;
-
 void handleRoot() {
-  digitalWrite(led, 1);  
+  digitalWrite(LED_PIN, LED_ON);  
   HtmlPage page = HtmlPage(
     HtmlTitle("Server Control Panel").s(),
     TempString(
@@ -28,11 +30,11 @@ void handleRoot() {
     ).s()
   );
   html.send(page.s());
-  digitalWrite(led, 0);
+  digitalWrite(LED_PIN, LED_OFF);
 }
 
 void handleNotFound() {
-  digitalWrite(led, 1);
+  digitalWrite(LED_PIN, LED_ON);
   String message = "File Not Found\n\n";
   message += "URI: ";
   message += server.uri();
@@ -45,22 +47,28 @@ void handleNotFound() {
     message += " " + server.argName(i) + ": " + server.arg(i) + "\n";
   }
   server.send(404, "text/plain", message);
-  digitalWrite(led, 0);
+  digitalWrite(LED_PIN, LED_OFF);
 }
 
 void setup(void) {
-  pinMode(led, OUTPUT);
-  digitalWrite(led, 0);
+  int led_state = LED_ON;
+  
+  pinMode(LED_PIN, OUTPUT);
+  digitalWrite(LED_PIN,led_state);
   Serial.begin(115200);
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
   Serial.println("");
 
+  
   // Wait for connection
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
+    digitalWrite(LED_PIN, led_state); // Flash LED while connecting.
+    led_state = !led_state;
   }
+  digitalWrite(LED_PIN, LED_OFF);
   Serial.println("");
   Serial.print("Connected to ");
   Serial.println(ssid);

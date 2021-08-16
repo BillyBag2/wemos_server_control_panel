@@ -17,15 +17,21 @@ public:
 
 class HtmlPage: public TempString {
   public:
-  HtmlPage(char* a, char * b):TempString("<html>\n<headers>",a,"\n</headers>\n<body>\n",b,"\n</body>\n</html>"){};
+  HtmlPage(char* headers, char * body):TempString(
+    "<html>\n<headers>\n"
+    "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n",
+    headers,
+    "\n</headers>\n<body style=\"font-family: monospace;\">\n",
+    body,
+    "\n</body>\n</html>\n"){};
 };
 
 class HtmlTitle: public TempString {
   public:
-  HtmlTitle(char* a):TempString("<title>\n",a,"\n</title>\n"){};
+  HtmlTitle(char* a):TempString("\n<title>",a,"</title>\n"){};
 };
 
 class HtmlHeader: public TempString {
   public:
-  HtmlHeader(char* a,char * n):TempString("<h",n,">",a,"</h",n,">\n"){};
+  HtmlHeader(char* a,char * n):TempString("\n<h",n,">",a,"</h",n,">\n"){};
 };
