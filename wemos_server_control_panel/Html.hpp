@@ -11,27 +11,32 @@ private:
   
 public:
   Html(ESP8266WebServer * server);
-  void send(char * html) ;
+  void send(String& html) ;
 };
 
 
-class HtmlPage: public TempString {
+class HtmlPage: public String {
   public:
-  HtmlPage(char* headers, char * body):TempString(
-    "<html>\n<headers>\n"
-    "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n",
-    headers,
-    "\n</headers>\n<body style=\"font-family: monospace;\">\n",
-    body,
+  HtmlPage(String headers, String body):String(
+    String("<html>\n<headers>\n"
+    "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n") +
+    headers + 
+    "\n</headers>\n<body style=\"font-family: monospace;\">\n" +
+    body +
     "\n</body>\n</html>\n"){};
 };
 
-class HtmlTitle: public TempString {
+class HtmlTitle: public String {
   public:
-  HtmlTitle(char* a):TempString("\n<title>",a,"</title>\n"){};
+  HtmlTitle(String a):String("\n<title>" + a + "</title>\n"){};
 };
 
-class HtmlHeader: public TempString {
+class HtmlHeader: public String {
   public:
-  HtmlHeader(char* a,char * n):TempString("\n<h",n,">",a,"</h",n,">\n"){};
+  HtmlHeader(String header,String indent):String("\n<h" + indent + ">" + header + "</h" + indent + ">\n"){};
+};
+
+class HtmlLink: public String {
+  public:
+  HtmlLink(String link,String url):String("\n<a href=\"" + url + "\">" + link + "</a>"){};
 };

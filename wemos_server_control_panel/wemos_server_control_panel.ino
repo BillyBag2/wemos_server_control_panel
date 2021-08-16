@@ -20,19 +20,64 @@ const char* password = PRIVATE_STAPSK;
 ESP8266WebServer server(80);
 Html html(&server);
 
+/*
+ * handleRoot()
+ * Server Control panel home page.
+ */
 void handleRoot() {
   digitalWrite(LED_PIN, LED_ON);  
   HtmlPage page = HtmlPage(
-    HtmlTitle("Server Control Panel").s(),
-    TempString(
-      HtmlHeader("Server Control Panel","1").s(),
-      "Some text"
-    ).s()
+    HtmlTitle("Server Control Panel"),
+    HtmlHeader("Server Control Panel","1") + HtmlLink("Wake On LAN","wol.html")
   );
-  html.send(page.s());
+  html.send(page);
   digitalWrite(LED_PIN, LED_OFF);
 }
 
+/*
+ * handleWol()
+ * Wake On LAN 'static' page.
+ */
+void handleWol() {
+    digitalWrite(LED_PIN, LED_ON);  
+  HtmlPage page = HtmlPage(
+    HtmlTitle("Wake On LAN"),
+    HtmlHeader("Wake On LAN","1") + HtmlLink("Test wake on LAN","/wol.cgi?MAC=01:02:03:04:05:06:07:08")
+  );
+  html.send(page);
+  digitalWrite(LED_PIN, LED_OFF);
+}
+
+void handleWolCgi() {
+  digitalWrite(LED_PIN, LED_ON);
+  String param = "";
+  for (uint8_t i = 0; i < server.args(); i++) {
+    if(server.argName(i).equals("MAC")) {
+      param += server.arg(i);
+    }
+  }
+
+  if(!param.equals("")) {
+    HtmlPage page = HtmlPage(
+      HtmlTitle("Wake On LAN sent!"),
+      HtmlHeader("Wake On LAN sent!","1") +
+      "A Wake On Lan massage was sent to " +
+      param + 
+      HtmlLink("Wake On LAN","/wol.html")
+    );
+    html.send(page);
+  }
+  else
+  {
+    HtmlPage page = HtmlPage(
+      HtmlTitle("Error:Wake On LAN"),
+      HtmlHeader("Error:Wake On LAN","1") + HtmlLink("Wake On LAN","/wol.html")
+    );
+    html.send(page);
+  }
+  
+  digitalWrite(LED_PIN, LED_OFF);
+}
 void handleNotFound() {
   digitalWrite(LED_PIN, LED_ON);
   String message = "File Not Found\n\n";
@@ -80,7 +125,8 @@ void setup(void) {
   }
 
   server.on("/", handleRoot);
-
+  server.on("/wol.html",handleWol);
+  server.on("/wol.cgi",handleWolCgi);
   server.on("/inline", []() {
     server.send(200, "text/plain", "this works as well");
   });
