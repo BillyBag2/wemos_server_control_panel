@@ -1,16 +1,25 @@
-# wemos_server_control_panel
+# Wemos Server Control Panel
+
+## Instructions
+
+Create your own private.h file and add...
+```
+#define PRIVATE_STASSID "your-ssid"
+#define PRIVATE_STAPSK  "your-password"
+```
+
+Build and program device. LED flashes while connecting. The LED should be out when connected. LED flickers on access.
 
 ## Overview (WIP)
 
 Wemos web portal to control servers. I have some HP gen 6 and gen 8 servers that are expensive to leave on. This project was created to provide web control over these.
 
-Woking items...
+Working...
 
- * (None)
+ * Web interface.(WIP)
 
-Wishlist includes...
+Wishlist...
 
- * Web interface.
  * Send Wake On Lan
  * iLO2/iL04 Power control.
  * iLO2/iL04 Power meter.
@@ -31,4 +40,5 @@ A random list of links that may or maynot be useful.
 
  * https://www.wemos.cc/en/latest/d1/d1_mini.html
  * https://github.com/esp8266/Arduino
+ * https://en.wikipedia.org/wiki/Wake-on-LAN
 
