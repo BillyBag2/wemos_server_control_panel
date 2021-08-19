@@ -7,7 +7,8 @@
 #include "wol.hpp"
 #include "Server.hpp"
 
-extern SCP_Server private_servers[];
+extern SCP_Server private_wol[];
+extern SCP_Server private_ilo[];
 
 #ifndef PRIVATE_STASSID
 #define PRIVATE_STASSID "your-ssid"
@@ -32,7 +33,7 @@ void handleRoot() {
   digitalWrite(LED_PIN, LED_ON);  
   HtmlPage page = HtmlPage(
     HtmlTitle("Server Control Panel"),
-    HtmlHeader("Server Control Panel","1") + HtmlLink("Wake On LAN","wol.html")
+    HtmlHeader("Server Control Panel","1") + HtmlLink("Wake On LAN","wol.html") + HtmlLink("iLo","ilo.html")
   );
   html.send(page);
   digitalWrite(LED_PIN, LED_OFF);
@@ -47,8 +48,8 @@ void handleWol() {
   // Create a list of servers.
   int i = 0;
   String list("");
-  while(private_servers[i].name) {
-    list = list + HtmlLink(private_servers[i].name,String("/wol.cgi?MAC=") + private_servers[i].mac);
+  while(private_wol[i].name) {
+    list = list + HtmlLink(private_wol[i].name,String("/wol.cgi?MAC=") + private_wol[i].address);
     list += HtmlBr();
     i++;
   }
@@ -56,6 +57,32 @@ void handleWol() {
     HtmlTitle("Wake On LAN"),
       HtmlHeader("Wake On LAN","1") + list +
  //     HtmlLink("Test wake on LAN","/wol.cgi?MAC=01:02:03:04:05:06:07:08") +
+      HtmlBr() +
+      HtmlLink("Home","/")
+  );
+  html.send(page);
+  digitalWrite(LED_PIN, LED_OFF);
+}
+
+
+/*
+ * handleIlo()
+ *  
+ *  iLo 'static' page.
+ */
+void handleIlo() {
+  digitalWrite(LED_PIN, LED_ON);
+  // Create a list of servers.
+  int i = 0;
+  String list("");
+  while(private_ilo[i].name) {
+    list = list + HtmlLink(private_ilo[i].name,String("http://") + private_ilo[i].address + "/xmldata?item=all" );
+    list += HtmlBr();
+    i++;
+  }
+  HtmlPage page = HtmlPage(
+    HtmlTitle("iLo"),
+      HtmlHeader("iLo xmldate","1") + list +
       HtmlBr() +
       HtmlLink("Home","/")
   );
@@ -158,10 +185,13 @@ void setup(void) {
   server.on("/", handleRoot);
   server.on("/wol.html",handleWol);
   server.on("/wol.cgi",handleWolCgi);
+  server.on("/ilo.html",handleIlo);
+  
+  /*
   server.on("/inline", []() {
     server.send(200, "text/plain", "this works as well");
   });
-
+ */
   server.on("/gif", []() {
     static const uint8_t gif[] PROGMEM = {
       0x47, 0x49, 0x46, 0x38, 0x37, 0x61, 0x10, 0x00, 0x10, 0x00, 0x80, 0x01,
