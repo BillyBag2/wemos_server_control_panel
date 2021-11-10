@@ -7,13 +7,12 @@
 #include "wol.hpp"
 #include "Server.hpp"
 
-extern SCP_Server private_wol[];
-extern SCP_Server private_ilo[];
-
-#ifndef PRIVATE_STASSID
-#define PRIVATE_STASSID "your-ssid"
-#define PRIVATE_STAPSK  "your-password"
+#ifndef HOST_NAME
+#define HOST_NAME "esp8266"
 #endif
+
+extern SCP_Server private_wol[]; /// A list of names and mac addresses.
+extern SCP_Server private_ilo[]; /// A list of names and ilo IP addresses.
 
 #define LED_PIN LED_BUILTIN
 #define LED_OFF 1
@@ -175,7 +174,7 @@ void setup(void) {
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
 
-  if (MDNS.begin("esp8266")) {
+  if (MDNS.begin(HOST_NAME)) {
     Serial.println("MDNS responder started");
   }
 
