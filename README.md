@@ -33,6 +33,8 @@ Files private.h and private.c contain private data. You will need to add these. 
 ```
 #define PRIVATE_STASSID "your-ssid"
 #define PRIVATE_STAPSK  "your-password"
+
+// #define HOST_NAME "myhostname" // Optional dynamic DNS name.
 ```
 
 ### public.cpp
