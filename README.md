@@ -34,6 +34,11 @@ I intend to create private.h and private.c that will contain private data. If st
 
 I am starting by targeting a wemos D1 (esp-8266) using Mac arduno IDE. That is what I have. Happy to add portability changes to master if requested.
 
+# IDE setup
+
+* https://github.com/esp8266/Arduino#installing-with-boards-manager
+
+
 # References
 
 A random list of links that may or maynot be useful.
