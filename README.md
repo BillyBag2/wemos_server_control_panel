@@ -28,8 +28,24 @@ Wishlist...
 
 ## Coding
 
-I intend to create private.h and private.c that will contain private data. If stuff is not compiling then you may need to add items to your version of thsese files.
+Files private.h and private.c contain private data. You will need to add these. If stuff is not compiling then you may need to add items to your version of thsese files.
 
+### private.h
+
+```
+#define PRIVATE_STASSID "your-ssid"
+#define PRIVATE_STAPSK  "your-password"
+```
+
+### public.cpp
+
+```
+#include "Server.hpp"
+
+SCP_Server private_ilo[] = {{"name1","hostname or ip1"},{"name2","hostname or ip2"},{0}};
+SCP_Server private_wol[] = {{"name1","mac1"},{"name2","mac2"},{0}};
+SCP_Server private_servers[] = {{"name1","hostname or ip1"},{"name2","hostname or ip2"},{0}};
+```
 ## About
 
 I am starting by targeting a wemos D1 (esp-8266) using Mac arduno IDE. That is what I have. Happy to add portability changes to master if requested.
