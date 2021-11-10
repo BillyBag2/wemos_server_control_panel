@@ -74,28 +74,24 @@ void handleIlo() {
   // Create a list of servers.
   int i = 0;
   String list("");
-  String list2("");
   while(private_ilo[i].name) {
-    list += HtmlLink(private_ilo[i].name,String("http://") + private_ilo[i].address + "/xmldata?item=all" );
+    list += + private_ilo[i].name + HtmlLink("raw",String("http://") + private_ilo[i].address + "/xmldata?item=all" );
+    list += " " + HtmlLink("www",String("http://") + private_ilo[i].address);
+    list += " " + HtmlLink("info",String("/xmldata?name=") + private_ilo[i].name);
     list += HtmlBr();
-
-    list2 += HtmlLink(private_ilo[i].name,String("http://") + private_ilo[i].address);
-    list2 += HtmlBr();
     i++;
   }
   HtmlPage page = HtmlPage(
     HtmlTitle("iLo"),
-      HtmlHeader("iLo XML","1") + list +
+      HtmlHeader("iLo","1") + list +
       HtmlBr() +
-      HtmlHeader("iLo Administration","1") + list2 +
-      HtmlBr() +
-      HtmlLink("Home","/")
+      HtmlLink("Home",String("/"))
   );
   html.send(page);
   digitalWrite(LED_PIN, LED_OFF);
 }
 
-/*
+/**
  * handleWolCgi()
  * Handle a WOL request.
  */
@@ -134,6 +130,41 @@ void handleWolCgi() {
   digitalWrite(LED_PIN, LED_OFF);
 }
 
+/**
+ * handleXmldata()
+ * Handle a Xmldata request.
+ * Read xmldata XML and display in human readable form.
+ */
+void handleXmldata() {
+  digitalWrite(LED_PIN, LED_ON);
+  String name = "";
+  for (uint8_t i = 0; i < server.args(); i++) {
+    if(server.argName(i).equals("name")) {
+      name += server.arg(i);
+    }
+  }
+
+  if(!name.equals("")) {
+    HtmlPage page = HtmlPage(
+      HtmlTitle("xmldata (Basic iLo information) for " + name),
+      HtmlHeader("xmldata (Basic iLo information) for " + name,"1")
+      + "(WIP)"
+    );
+    html.send(page);
+  }
+  else
+  {
+    HtmlPage page = HtmlPage(
+      HtmlTitle("Error: No hostname or IP address provided for xmldata"),
+        HtmlHeader("Error: No hostname or IP address provided for xmldata","1") + 
+        HtmlBr() +
+        HtmlLink("iLo","/ilo.html")
+    );
+    html.send(page);
+  }
+  
+  digitalWrite(LED_PIN, LED_OFF);
+}
 /*
  * handleNotFound()
  * Handle not found page.
@@ -191,6 +222,7 @@ void setup(void) {
   server.on("/wol.html",handleWol);
   server.on("/wol.cgi",handleWolCgi);
   server.on("/ilo.html",handleIlo);
+  server.on("/xmldata",handleXmldata);
   
   /*
   server.on("/inline", []() {
