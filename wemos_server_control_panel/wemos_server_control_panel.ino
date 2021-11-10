@@ -8,23 +8,23 @@
 #include "Server.hpp"
 
 #ifndef HOST_NAME
-#define HOST_NAME "esp8266"
+#define HOST_NAME "esp8266" /// Hostname used by dynamic DNS. e.g. esp8266.local
 #endif
 
 extern SCP_Server private_wol[]; /// A list of names and mac addresses.
 extern SCP_Server private_ilo[]; /// A list of names and ilo IP addresses.
 
-#define LED_PIN LED_BUILTIN
-#define LED_OFF 1
-#define LED_ON 0
+#define LED_PIN LED_BUILTIN /// IO Pin used for LED
+#define LED_OFF 1           /// Off state for LED
+#define LED_ON 0            /// On state for LED
 
-const char* ssid = PRIVATE_STASSID;
-const char* password = PRIVATE_STAPSK;
+const char* ssid = PRIVATE_STASSID;     /// The SSID for the WiFi network. (Add PRIVATE_STASSID to private.h)
+const char* password = PRIVATE_STAPSK;  /// The password for the WIFI network. (Add PRIVATE_STAPSK to private.h)
 
-ESP8266WebServer server(80);
-Html html(&server);
+ESP8266WebServer server(80);  /// Web server class.Server starts on port provided.
+Html html(&server);           /// HTML service started on server.
 
-/*
+/**
  * handleRoot()
  * Server Control panel home page.
  */
@@ -38,7 +38,7 @@ void handleRoot() {
   digitalWrite(LED_PIN, LED_OFF);
 }
 
-/*
+/**
  * handleWol()
  * Wake On LAN 'static' page.
  */
@@ -64,7 +64,7 @@ void handleWol() {
 }
 
 
-/*
+/**
  * handleIlo()
  *  
  *  iLo 'static' page.
@@ -74,14 +74,20 @@ void handleIlo() {
   // Create a list of servers.
   int i = 0;
   String list("");
+  String list2("");
   while(private_ilo[i].name) {
-    list = list + HtmlLink(private_ilo[i].name,String("http://") + private_ilo[i].address + "/xmldata?item=all" );
+    list += HtmlLink(private_ilo[i].name,String("http://") + private_ilo[i].address + "/xmldata?item=all" );
     list += HtmlBr();
+
+    list2 += HtmlLink(private_ilo[i].name,String("http://") + private_ilo[i].address);
+    list2 += HtmlBr();
     i++;
   }
   HtmlPage page = HtmlPage(
     HtmlTitle("iLo"),
-      HtmlHeader("iLo xmldate","1") + list +
+      HtmlHeader("iLo XML","1") + list +
+      HtmlBr() +
+      HtmlHeader("iLo Administration","1") + list2 +
       HtmlBr() +
       HtmlLink("Home","/")
   );
