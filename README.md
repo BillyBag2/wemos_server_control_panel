@@ -37,6 +37,7 @@ I am starting by targeting a wemos D1 (esp-8266) using Mac arduno IDE. That is w
 # IDE setup
 
 * https://github.com/esp8266/Arduino#installing-with-boards-manager
+* WakeOnLan (Through library manager)
 
 
 # References
