@@ -55,6 +55,9 @@ I am starting by targeting a wemos D1 (esp-8266) using Mac arduno IDE. That is w
 * https://github.com/esp8266/Arduino#installing-with-boards-manager
 * WakeOnLan (Through library manager)
 
+# Windows find MAC addresses
+
+On windows use "ARP -A" in a cmd prompt to list all cached IP to MAC address mappings. To add a mapping turn on the target host and ping it. Then run the arp command again.
 
 # References
 
