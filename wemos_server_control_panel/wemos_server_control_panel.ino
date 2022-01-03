@@ -2,13 +2,18 @@
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
 #include <ESP8266mDNS.h>
+#include <TinyXML.h>
+//#include <ArduinoJson.h>
 #include "private.h"
 #include "Html.hpp"
 #include "wol.hpp"
 #include "Server.hpp"
+#include "Get.hpp"
+#include "ilo.hpp"
+#include "xml.hpp"
 
 #ifndef HOST_NAME
-#define HOST_NAME "esp8266" /// Hostname used by dynamic DNS. e.g. esp8266.local
+#define HOST_NAME "ilo" /// Hostname used by dynamic DNS. e.g. esp8266.local
 #endif
 
 extern SCP_Server private_wol[]; /// A list of names and mac addresses.
@@ -136,7 +141,7 @@ void handleWolCgi() {
  * Read xmldata XML and display in human readable form.
  */
 void handleXmldata() {
-  digitalWrite(LED_PIN, LED_ON);
+  //digitalWrite(LED_PIN, LED_ON);
   String name = "";
   for (uint8_t i = 0; i < server.args(); i++) {
     if(server.argName(i).equals("name")) {
@@ -144,11 +149,18 @@ void handleXmldata() {
     }
   }
 
-  if(!name.equals("")) {
+  String host = SCP_GetAddress(private_ilo,name);
+  if(!host.equals("")) {
+    String responce = Get("http://" + host + "/xmldata?item=all");
+
+    TinyXML xml;
+    xml.init((uint8_t *)(responce.c_str()),responce.length(),&XML_dump_callback);
+    ???
     HtmlPage page = HtmlPage(
       HtmlTitle("xmldata (Basic iLo information) for " + name),
       HtmlHeader("xmldata (Basic iLo information) for " + name,"1")
-      + "(WIP)"
+      + "Product: " + HtmlBr() + responce
+      
     );
     html.send(page);
   }
@@ -163,7 +175,7 @@ void handleXmldata() {
     html.send(page);
   }
   
-  digitalWrite(LED_PIN, LED_OFF);
+  //digitalWrite(LED_PIN, LED_OFF);
 }
 /*
  * handleNotFound()

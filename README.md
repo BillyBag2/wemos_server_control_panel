@@ -5,7 +5,7 @@
 * LED flashes while connecting to the wifi.
 * The LED should be out when connected.
 * LED flickers on access.
-* Access via DHCP allocated IP address or at http://esp8266.local if dynamic DNS is supported by your browser's host.
+* Access via DHCP allocated IP address or at http://ilo.local if dynamic DNS is supported by your browser's host.
 
 
 ## Overview (WIP)
